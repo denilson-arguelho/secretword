@@ -24,9 +24,20 @@ function App() {
   //Variavel que recebe o objeto "words" ou seja, a palavras que serão utilizadas
   const [words] = useState(wordsList)
 
+  //States
   const [pickedWord, setPickedWord] = useState("")
   const [pickedCategory, setPickedCategory] = useState("")
   const [letters, setLetters] = useState([])
+
+  //letras adivinhadas
+  const [guessedLetters, setGuessedLetters] = useState([])
+  //letras erradas
+  const [wrongLetters, setWrongLetters] = useState([])
+  //tentativas
+  const [guesses, setGuesses] = useState(3)
+  //pontuação
+  const [score, setScore] = useState(0)
+
 
   const pickWordAndCategory = () => {
     //pegando a key do meu objeto de palavras, o ID.
@@ -59,8 +70,8 @@ function App() {
     //fill states
     setPickedWord(word)
     setPickedCategory(category)
-    setLetters(letters)
-    
+    setLetters(wordLetters)
+
     setGameStage(stages[1].name)
   }
 
@@ -79,7 +90,16 @@ function App() {
     <div className="App">
 
       {gameStage === 'start' && <StartScreen startGame={startGame} />}
-      {gameStage === 'game' && <Game verifyLetter={verifyLetter} />}
+      {gameStage === 'game' && <Game 
+      verifyLetter={verifyLetter}
+      pickedWord={pickedWord}
+      pickedCategory={pickedCategory}
+      letters={letters}
+      guessedLetters={guessedLetters}
+      wrongLetters={wrongLetters}
+      guesses={guesses}
+      score={score}
+      />}
       {gameStage === 'end' && <GameOver retry={retry} />}
     </div>
   );
