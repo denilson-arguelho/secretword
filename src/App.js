@@ -18,6 +18,8 @@ const stages = [
   { id: 3, name: "end" },
 ];
 
+const guessesQty = 3
+
 function App() {
   //useState para conseguir alterar os valores de estágios da aplicação
   const [gameStage, setGameStage] = useState(stages[0].name)
@@ -34,7 +36,7 @@ function App() {
   //letras erradas
   const [wrongLetters, setWrongLetters] = useState([])
   //tentativas
-  const [guesses, setGuesses] = useState(3)
+  const [guesses, setGuesses] = useState(guessesQty)
   //pontuação
   const [score, setScore] = useState(0)
 
@@ -97,12 +99,29 @@ function App() {
         ...actualGuessedLetters,
         normalizedLetter
       ])
+
+      setGuesses((actualGuesses)=>actualGuesses -1)
     }
 
   }
 
+  const cleaLetterStates = () =>{
+    setGuessedLetters([])
+    setWrongLetters([])
+  }
+
+  //state para monitora a quantidade de tentativas
+  useEffect(()=>{
+    if(guesses <= 0){
+      cleaLetterStates()
+      setGameStage(stages[2].name)
+    }
+  },[guesses])
+
   //restarts the game
   const retry = () => {
+    setScore(0)
+    setGuesses(guessesQty)
     setGameStage(stages[0].name)
   }
 
