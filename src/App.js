@@ -77,7 +77,28 @@ function App() {
 
   //process the letter input
   const verifyLetter = (letter) => {
-    console.log(letter);
+    //deixando a letra que vem do input em minuscula
+    const normalizedLetter = letter.toLowerCase()
+
+    //verificação se a letra ja foi utilizada de alguma forma
+    if(guessedLetters.includes(normalizedLetter) || 
+    wrongLetters.includes(normalizedLetter)){
+      return
+    }
+
+    //incluir as letras acertadas, ou remover as letra erradas
+    if(letters.includes(normalizedLetter)){
+      setGuessedLetters((actualGuessedLetters)=>[
+        ...actualGuessedLetters,
+        normalizedLetter
+      ])
+    }else{
+      setWrongLetters((actualGuessedLetters)=>[
+        ...actualGuessedLetters,
+        normalizedLetter
+      ])
+    }
+
   }
 
   //restarts the game
